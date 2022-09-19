@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,16 +17,27 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard', [
+            'canLogin' => Route::has('login'),
+        ]);
+    });
+
+
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::get('/applications', [ApplicationController::class, 'index'])->name('application.list');
+    Route::get('/applications/create', [ApplicationController::class, 'create'])->name('application.create');
+    Route::post('/applications/create', [ApplicationController::class, 'store'])->name('application.store');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.list');
+
+    Route::get('/clients', [ApplicationController::class, 'index'])->name('client.list');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

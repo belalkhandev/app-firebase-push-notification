@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ref', 32);
             $table->string('name', 50);
-            $table->string('fcm_api_key')->nullable();
+            $table->tinyText('fcm_api_key')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
