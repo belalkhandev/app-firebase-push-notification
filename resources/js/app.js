@@ -5,6 +5,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 import 'bootstrap'
+import 'boxicons'
+import 'boxicons/css/boxicons.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/app.css';
 import './assets/style.css';
