@@ -7,39 +7,37 @@ import { Head } from '@inertiajs/inertia-vue3';
     <Head title="Notification" />
 
     <AuthenticatedLayout>
-
         <template #header>
             <h5>Notification</h5>
         </template>
 
-        <div class="bg-white p-4">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>App</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Created At</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="item in 10"  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 py-4">
-                    <td>#</td>
-                    <td>Test app</td>
-                    <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td>Malcolm Lockyer</td>
-                    <td>1961</td>
-                    <td>
-                        <div class="flex flex-row gap-3 justify-center items-center">
-                            <a href="" class="text-green-600">Send Notification</a>
-                            <a href="" class="text-red-600">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="box">
+            <div class="box-header">
+                <h5 class="box-title">Table list</h5>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>One</th>
+                        <th>Two</th>
+                        <th>Three</th>
+                        <th>Four</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in 15">
+                        <td>Data</td>
+                        <td>Data</td>
+                        <td>Data</td>
+                        <td>Data</td>
+                        <td>Data</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </AuthenticatedLayout>
 </template>

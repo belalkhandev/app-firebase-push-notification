@@ -14,7 +14,7 @@ body {
     background-color: #f0f5f6;
     font-size: 1rem;
     line-height: 1.625;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", sans-serif !important;
 }
 
 a {
@@ -33,7 +33,7 @@ ul, ol {
 }
 
 label {
-    font-family: "Inter", sans-serif;
+    font-family: "Inter", sans-serif !important;
 }
 
 /* width */
@@ -63,7 +63,7 @@ h4,
 h5,
 h6 {
     color: #0f172a;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif !important;
     font-weight: 600;
     margin: 0;
     padding: 0;
@@ -388,7 +388,7 @@ header .apps {
     justify-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 270px;
+    width: 250px;
     -moz-column-gap: 10px;
     column-gap: 10px;
 }
@@ -404,7 +404,7 @@ header .apps .app-brand h3 {
     color: #fff;
 }
 header .header-navs {
-    width: calc(100% - 270px);
+    width: calc(100% - 250px);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -585,7 +585,7 @@ header .header-navs .nav-items .nav-item:hover .nav-icon {
     height: calc(100vh - 60px);
 }
 .wrapper .sidebar {
-    width: 270px;
+    width: 250px;
     height: 100%;
     overflow-y: auto;
     background-color: #fafafa;
@@ -596,11 +596,13 @@ header .header-navs .nav-items .nav-item:hover .nav-icon {
     color: #9CA3AF;
     font-weight: 400;
     margin-bottom: 15px;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
 }
+
 .wrapper .sidebar .sidebar-items .sidebar-item {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
+
 .wrapper .sidebar .sidebar-items .sidebar-item .sidebar-item-header {
     display: flex;
     align-items: center;
@@ -615,11 +617,9 @@ header .header-navs .nav-items .nav-item:hover .nav-icon {
     font-weight: 400;
     color: #0f172a;
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1rem;
 }
-.wrapper .sidebar .sidebar-items .sidebar-item .sidebar-item-body {
-    margin-top: 5px;
-}
+
 .wrapper .sidebar .sidebar-items .sidebar-item .sidebar-item-body ul {
     padding-left: 10px;
 }
@@ -631,7 +631,7 @@ header .header-navs .nav-items .nav-item:hover .nav-icon {
     color: #515664;
     text-transform: capitalize;
     display: block;
-    padding: 3px 0px;
+    padding: 5px 0px;
     font-size: 1rem;
 }
 .wrapper .sidebar .sidebar-items .sidebar-item .sidebar-item-body ul li::after {
@@ -660,7 +660,7 @@ header .header-navs .nav-items .nav-item:hover .nav-icon {
     padding: 15px;
 }
 .wrapper .sidebar ~ .main-content {
-    width: calc(100% - 270px);
+    width: calc(100% - 250px);
 }
 
 #login-wrap {
