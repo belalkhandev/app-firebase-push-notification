@@ -37,7 +37,7 @@
                         <span class="icon">
                             <i class='bx bxs-user-account' ></i>
                         </span>
-                    <h4>App Clients</h4>
+                    <h4>Clients</h4>
                 </div>
                 <div class="sidebar-item-body">
                     <ul>
@@ -50,7 +50,7 @@
                         <span class="icon">
                             <i class='bx bxs-cog' ></i>
                         </span>
-                    <h4>Security & Settings</h4>
+                    <h4>Settings</h4>
                 </div>
                 <div class="sidebar-item-body">
                     <ul>

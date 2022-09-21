@@ -8,7 +8,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
     <header>
         <div class="apps">
             <div class="app-brand text-center">
-                <h3>App Notification</h3>
+                <h2 class="text-white">Notifier</h2>
             </div>
         </div>
         <div class="header-navs">
