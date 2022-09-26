@@ -4,15 +4,22 @@ import {Head, useForm} from '@inertiajs/inertia-vue3';
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
+import Pagination from "@/Components/Pagination.vue";
+
+const props = defineProps({
+    timezones: {
+        type: Object,
+        default: () => ({})
+    }
+})
 
 const form = useForm({
-    current_password: '',
-    password: '',
-    password_confirmation: ''
+    name: '',
+    timezone: ''
 });
 
 const submit = () => {
-    form.post(route('update.password'));
+    form.post(route('timezone.store'));
 };
 </script>
 
@@ -23,7 +30,11 @@ const submit = () => {
         <template #header>
             <h5>Timezones</h5>
         </template>
-
+        <div v-if="$page.props.message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+    <span class="font-medium">
+        {{ $page.props.message }}
+    </span>
+        </div>
         <div class="row">
             <div class="col-lg-7">
                 <div class="box">
@@ -44,17 +55,30 @@ const submit = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in 12">
-                                    <td>{{ item }}</td>
-                                    <td>Test {{ item }}</td>
-                                    <td>UTC+{{ item }}</td>
-                                    <td></td>
+                                <tr v-for="(timezone, key) in timezones.data">
+                                    <td>{{ key+1 }}</td>
+                                    <td>{{ timezone.name }}</td>
+                                    <td>{{ timezone.timezone }}</td>
+                                    <td>
+                                        <div class="action">
+                                            <ul>
+                                                <li>
+                                                    <a href="" class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="box-footer"></div>
+                    <div class="box-footer">
+                        <Pagination :data="timezones" />
+                    </div>
                 </div>
             </div>
 
@@ -69,13 +93,13 @@ const submit = () => {
                         <form @submit.prevent="submit">
                             <div class="form-group">
                                 <InputLabel>Name</InputLabel>
-                                <TextInput type="text"  placeholder="********" v-model="form.current_password"/>
-                                <InputError class="mt-2" :message="form.errors.current_password" />
+                                <TextInput type="text"  placeholder="e.g: Dhaka/Astana" v-model="form.name"/>
+                                <InputError class="mt-2" :message="form.errors.name" />
                             </div>
                             <div class="form-group">
                                 <InputLabel>Timezone</InputLabel>
-                                <TextInput type="text"  placeholder="********" v-model="form.current_password"/>
-                                <InputError class="mt-2" :message="form.errors.current_password" />
+                                <TextInput type="text"  placeholder="e.g: UTC+6" v-model="form.timezone"/>
+                                <InputError class="mt-2" :message="form.errors.timezone" />
                             </div>
                             <div class="form-submit mt-4 text-right">
                                 <button type="submit" class="btn btn-primary py-2 px-4" :disabled="form.processing">Save</button>

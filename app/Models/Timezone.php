@@ -9,6 +9,8 @@ class Timezone extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'timezone'];
+
     public function clients()
     {
         return $this->hasMany(Client::class);

@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Timezone;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class TimezoneRepository extends Repository
 {
@@ -17,14 +15,14 @@ class TimezoneRepository extends Repository
         return Timezone::class;
     }
 
-    public function getByPaginate()
+    public function getByPaginate($limit = 15)
     {
-        return $this->query()->active()->paginate();
+        return $this->query()->active()->paginate($limit);
     }
 
     public function storeByRquest($request)
     {
-        return $this->query()->firstOrCreate([
+        return $this->query()->create([
             'name' => $request->name,
             'timezone' => $request->timezone,
             'is_active'=> 1

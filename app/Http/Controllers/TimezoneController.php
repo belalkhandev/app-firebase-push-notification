@@ -17,18 +17,31 @@ class TimezoneController extends Controller
 
     public function index()
     {
-        return Inertia::render('Timezone');
+        $timezones = $this->timezoneRepo->getByPaginate(10);
+
+        return Inertia::render('Timezone', [
+            'timezones' => $timezones
+        ]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'timezone' => 'required'
+            'timezone' => 'required|max:6'
         ]);
 
+        //check exist or not
         $timezone = $this->timezoneRepo->storeByRquest($request);
 
-        return $timezone;
+        if (!$timezone) {
+            return Inertia::render('Timezone', [
+                'message' => 'Failed to store',
+            ]);
+        }
+
+        return Inertia::render('Timezone', [
+            'message' => 'Has been stored successfully'
+        ]);
     }
 
 }
