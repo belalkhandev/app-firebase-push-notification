@@ -27,7 +27,7 @@ import { Head } from '@inertiajs/inertia-vue3';
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in 15">
+                    <tr v-for="item in 10">
                         <td>Data</td>
                         <td>Data</td>
                         <td>Data</td>

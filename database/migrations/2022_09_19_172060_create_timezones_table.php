@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('timezones', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20)->unique();
+            $table->string('name', 20)->nullable();
+            $table->string('timezone', 10)->unique();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

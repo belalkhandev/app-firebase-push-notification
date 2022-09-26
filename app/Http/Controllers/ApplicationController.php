@@ -15,4 +15,9 @@ class ApplicationController extends Controller
             'applications' => $applications
         ]);
     }
+
+    public function applicationClients()
+    {
+        return Inertia::render('Clients');
+    }
 }

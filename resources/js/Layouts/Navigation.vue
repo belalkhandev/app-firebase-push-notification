@@ -41,7 +41,7 @@
                 </div>
                 <div class="sidebar-item-body">
                     <ul>
-                        <li><a href="">All Clients</a></li>
+                        <li><NavLink :href="route('clients.list')">All Clients</NavLink></li>
                     </ul>
                 </div>
             </div>
@@ -54,9 +54,9 @@
                 </div>
                 <div class="sidebar-item-body">
                     <ul>
-                        <li><a href="">Applications</a></li>
-                        <li><a href="">Timezones</a></li>
-                        <li><a href="">Change Password</a></li>
+                        <li><NavLink :href="route('application.list')">Applications</NavLink></li>
+                        <li><NavLink :href="route('timezone.list')">Timezones</NavLink></li>
+                        <li><NavLink :href="route('change.password')">Change Password</NavLink></li>
                     </ul>
                 </div>
             </div>
