@@ -11,9 +11,14 @@ class ApplicationController extends Controller
     {
         $applications = 'write something about inertia';
 
-        return Inertia::render('Application', [
+        return Inertia::render('Application/List', [
             'applications' => $applications
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Application/Create');
     }
 
     public function applicationClients()

@@ -32,7 +32,7 @@ import { Head } from '@inertiajs/inertia-vue3';
                         <td>{{ item }}</td>
                         <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
                         <td>
-                            <img src="../assets/images/app-icon.png" class="w-20" alt="">
+                            <img src="../assets/images/app-icon.png" class="w-12" alt="">
                         </td>
                         <td>Test</td>
                         <td></td>

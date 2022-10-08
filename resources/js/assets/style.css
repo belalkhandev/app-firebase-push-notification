@@ -271,7 +271,8 @@ h6 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0px;
+    padding: 10px 0;
+    min-height: 54px;
 }
 .box .box-header .box-title h4 {
     font-size: 1.125rem;

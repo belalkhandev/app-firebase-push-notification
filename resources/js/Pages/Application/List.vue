@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
+import { Link } from '@inertiajs/inertia-vue3';
 </script>
 
 <template>
@@ -16,7 +17,7 @@ import { Head } from '@inertiajs/inertia-vue3';
             <div class="box-header">
                 <h5 class="box-title">Application list</h5>
                 <div class="action">
-                    <a href="" class="btn btn-primary btn-sm p-4">Add Application</a>
+                    <Link :href="route('application.create')" class="btn btn-dark text-xs btn-sm p-3">Add Application</Link>
                 </div>
             </div>
             <div class="box-body">
@@ -35,7 +36,7 @@ import { Head } from '@inertiajs/inertia-vue3';
                         <td>{{ item }}</td>
                         <td>Test app name</td>
                         <td>
-                            <img src="../assets/images/app-icon.png" class="w-20" alt="">
+                            <img src="../../assets/images/app-icon.png" class="w-12" alt="">
                         </td>
                         <td>Loremipsumdolorsitamet,consecteturadipisicingelit.Doloreesseeum,harum impedit iste iusto </td>
                         <td></td>
