@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->string('ref', 32);
+            $table->string('ref', 32)->unique();
             $table->string('name', 50);
             $table->tinyText('fcm_api_key')->nullable();
+            $table->string('icon')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });

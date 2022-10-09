@@ -28,4 +28,18 @@ class TimezoneRepository extends Repository
             'is_active'=> 1
         ]);
     }
+
+    public function updateByRequest($request, $timezoneId)
+    {
+        return $this->query()->findOrFail($timezoneId)->update([
+            'name' => $request->name,
+            'timezone' => $request->timezone,
+            'is_active'=> 1
+        ]);
+    }
+
+    public function deleteByRequest($timezoneId)
+    {
+        return $this->query()->findOrFail($timezoneId)->delete();
+    }
 }
