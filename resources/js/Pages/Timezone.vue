@@ -19,22 +19,42 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('timezone.store'));
+    form.post(route('timezone.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Stored successfully'
+            });
+        }
+    });
 };
+
+function deleteTimezone(timezoneId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#6d28d9',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('timezone.delete', timezoneId))
+        }
+    })
+}
+
 </script>
 
 <template>
     <Head title="Timezone" />
-
     <AuthenticatedLayout>
         <template #header>
             <h5>Timezones</h5>
         </template>
-        <div v-if="$page.props.message" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
-    <span class="font-medium">
-        {{ $page.props.message }}
-    </span>
-        </div>
+
         <div class="row">
             <div class="col-lg-7">
                 <div class="box">
@@ -49,16 +69,16 @@ const submit = () => {
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
                                     <th>Timezone</th>
+                                    <th>Name</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="(timezone, key) in timezones.data">
                                     <td>{{ key+1 }}</td>
-                                    <td>{{ timezone.name }}</td>
                                     <td>{{ timezone.timezone }}</td>
+                                    <td>{{ timezone.name }}</td>
                                     <td>
                                         <div class="action">
                                             <ul>
@@ -66,7 +86,7 @@ const submit = () => {
                                                     <a href="" class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></a>
+                                                    <button @click="deleteTimezone(timezone.id)" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></button>
                                                 </li>
                                             </ul>
                                         </div>

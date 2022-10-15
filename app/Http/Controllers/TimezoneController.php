@@ -27,21 +27,26 @@ class TimezoneController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'timezone' => 'required|max:6'
+            'timezone' => 'required|unique:timezones,timezone|max:6'
         ]);
 
         //check exist or not
         $timezone = $this->timezoneRepo->storeByRquest($request);
 
         if (!$timezone) {
-            return Inertia::render('Timezone', [
-                'message' => 'Failed to store',
-            ]);
+            return redirect()->back()->with('message', 'Failed to store timezone');
         }
 
-        return Inertia::render('Timezone', [
-            'message' => 'Has been stored successfully'
-        ]);
+        return redirect()->route('timezone.list')->with('message', 'Timezone saved successfully');
+    }
+
+    public function destroy($timezoneId)
+    {
+        if ($this->timezoneRepo->deleteByRequest($timezoneId)) {
+            return redirect()->route('timezone.list')->with('message', 'Timezone deleted successfully');
+        }
+
+        return redirect()->back()->with('message', 'Failed to delete timezone');
     }
 
 }
