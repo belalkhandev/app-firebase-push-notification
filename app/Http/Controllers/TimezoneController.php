@@ -40,6 +40,17 @@ class TimezoneController extends Controller
         return redirect()->route('timezone.list')->with('message', 'Timezone saved successfully');
     }
 
+    public function edit($timezoneId)
+    {
+        $timezones = $this->timezoneRepo->getByPaginate(10);
+        $timezone = $this->timezoneRepo->findOrFail($timezoneId);
+
+        return Inertia::render('Timezone/Edit', [
+            'timezones' => $timezones,
+            'timezone' => $timezone
+        ]);
+    }
+
     public function destroy($timezoneId)
     {
         if ($this->timezoneRepo->deleteByRequest($timezoneId)) {

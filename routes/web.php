@@ -43,6 +43,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/timezones', [TimezoneController::class, 'index'])->name('timezone.list');
     Route::post('/timezones', [TimezoneController::class, 'store'])->name('timezone.store');
+    Route::get('/timezones/{timezoneId}', [TimezoneController::class, 'edit'])->name('timezone.edit');
+    Route::put('/timezones/{timezoneId}', [TimezoneController::class, 'update'])->name('timezone.update');
     Route::delete('/timezones/{timezoneId}', [TimezoneController::class, 'destroy'])->name('timezone.delete');
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('change.password');
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('update.password');

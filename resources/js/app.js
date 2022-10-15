@@ -21,7 +21,7 @@ const cleanApp = () => {
 window.Swal = Swal;
 window.Toast = Swal.mixin({
     toast: true,
-    position: 'bottom-right',
+    position: 'top-end',
     showConfirmButton: false,
     timer: 2000,
     timerProgressBar: false,

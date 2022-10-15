@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, useForm} from '@inertiajs/inertia-vue3';
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
-import InputError from "@/Components/InputError.vue";
 import Pagination from "@/Components/Pagination.vue";
+import TimezoneCreate from "@/Pages/Timezone/Create.vue";
+import TimezoneEdit from "@/Pages/Timezone/Edit.vue";
+import { Link }  from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     timezones: {
@@ -13,10 +13,7 @@ const props = defineProps({
     }
 })
 
-const form = useForm({
-    name: '',
-    timezone: ''
-});
+const form = useForm();
 
 const submit = () => {
     form.post(route('timezone.store'), {
@@ -45,6 +42,13 @@ function deleteTimezone(timezoneId) {
         }
     })
 }
+
+const showCreateFrom = true;
+
+function editTimezone(timezoneId) {
+
+}
+
 
 </script>
 
@@ -83,7 +87,13 @@ function deleteTimezone(timezoneId) {
                                         <div class="action">
                                             <ul>
                                                 <li>
-                                                    <a href="" class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></a>
+                                                    <Link :href="
+                                                    route(
+                                                        'timezone.edit',
+                                                        timezone.id
+                                                    )
+                                                "
+                                                        class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></Link>
                                                 </li>
                                                 <li>
                                                     <button @click="deleteTimezone(timezone.id)" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></button>
@@ -103,31 +113,8 @@ function deleteTimezone(timezoneId) {
             </div>
 
             <div class="col-lg-5">
-                <div class="box">
-                    <div class="box-header py-4">
-                        <div class="box-title">
-                            <h4>Timezones</h4>
-                        </div>
-                    </div>
-                    <div class="box-body">
-                        <form @submit.prevent="submit">
-                            <div class="form-group">
-                                <InputLabel>Name</InputLabel>
-                                <TextInput type="text"  placeholder="e.g: Dhaka/Astana" v-model="form.name"/>
-                                <InputError class="mt-2" :message="form.errors.name" />
-                            </div>
-                            <div class="form-group">
-                                <InputLabel>Timezone</InputLabel>
-                                <TextInput type="text"  placeholder="e.g: UTC+6" v-model="form.timezone"/>
-                                <InputError class="mt-2" :message="form.errors.timezone" />
-                            </div>
-                            <div class="form-submit mt-4 text-right">
-                                <button type="submit" class="btn btn-primary py-2 px-4" :disabled="form.processing">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="box-footer"></div>
-                </div>
+                <TimezoneCreate v-if="showCreateFrom"/>
+                <TimezoneEdit v-else :timezone="''"/>
             </div>
         </div>
     </AuthenticatedLayout>
