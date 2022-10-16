@@ -74,7 +74,7 @@ function deleteTimezone(timezoneId) {
                                 </thead>
                                 <tbody>
                                 <tr v-for="(timezone, key) in timezones.data">
-                                    <td>{{ key+1 }}</td>
+                                    <td>{{ timezones.from+key }}</td>
                                     <td>{{ timezone.timezone }}</td>
                                     <td>{{ timezone.name }}</td>
                                     <td>
