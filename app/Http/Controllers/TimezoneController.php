@@ -19,9 +19,14 @@ class TimezoneController extends Controller
     {
         $timezones = $this->timezoneRepo->getByPaginate(10);
 
-        return Inertia::render('Timezone', [
+        return Inertia::render('Timezone/Index', [
             'timezones' => $timezones
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Timezone/Create');
     }
 
     public function store(Request $request)
@@ -37,7 +42,7 @@ class TimezoneController extends Controller
             return redirect()->back()->with('message', 'Failed to store timezone');
         }
 
-        return redirect()->route('timezone.list')->with('message', 'Timezone saved successfully');
+        return redirect()->back()->with('message', 'Timezone saved successfully');
     }
 
     public function edit($timezoneId)

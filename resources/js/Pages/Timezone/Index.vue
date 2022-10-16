@@ -2,8 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, useForm} from '@inertiajs/inertia-vue3';
 import Pagination from "@/Components/Pagination.vue";
-import TimezoneCreate from "@/Pages/Timezone/Create.vue";
-import TimezoneEdit from "@/Pages/Timezone/Edit.vue";
 import { Link }  from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
@@ -43,13 +41,6 @@ function deleteTimezone(timezoneId) {
     })
 }
 
-const showCreateFrom = true;
-
-function editTimezone(timezoneId) {
-
-}
-
-
 </script>
 
 <template>
@@ -62,9 +53,12 @@ function editTimezone(timezoneId) {
         <div class="row">
             <div class="col-lg-7">
                 <div class="box">
-                    <div class="box-header py-4">
+                    <div class="box-header py-3">
                         <div class="box-title">
                             <h4>Timezones</h4>
+                        </div>
+                        <div class="box-action">
+                            <Link :href="route('timezone.create')" class="btn btn-sm btn-rounded btn-outline-primary"><i class="bx bx-plus"></i></Link>
                         </div>
                     </div>
                     <div class="box-body">
@@ -110,11 +104,6 @@ function editTimezone(timezoneId) {
                         <Pagination :data="timezones" />
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-5">
-                <TimezoneCreate v-if="showCreateFrom"/>
-                <TimezoneEdit v-else :timezone="''"/>
             </div>
         </div>
     </AuthenticatedLayout>

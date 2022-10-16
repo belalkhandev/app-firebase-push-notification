@@ -42,7 +42,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/clients', [ApplicationController::class, 'index'])->name('client.list');
 
     Route::get('/timezones', [TimezoneController::class, 'index'])->name('timezone.list');
-    Route::post('/timezones', [TimezoneController::class, 'store'])->name('timezone.store');
+    Route::get('/timezones/create', [TimezoneController::class, 'create'])->name('timezone.create');
+    Route::post('/timezones/create', [TimezoneController::class, 'store'])->name('timezone.store');
     Route::get('/timezones/{timezoneId}', [TimezoneController::class, 'edit'])->name('timezone.edit');
     Route::put('/timezones/{timezoneId}', [TimezoneController::class, 'update'])->name('timezone.update');
     Route::delete('/timezones/{timezoneId}', [TimezoneController::class, 'destroy'])->name('timezone.delete');
