@@ -23,6 +23,11 @@ class Application extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

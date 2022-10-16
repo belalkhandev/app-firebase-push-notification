@@ -17,7 +17,7 @@ class ClientRepository extends Repository
 
     public function getByPaginate($limit = 15)
     {
-        return $this->query()->paginate($limit);
+        return $this->query()->with('timezone', 'application')->paginate($limit);
     }
 
     public function storeByRquest($request)
@@ -25,18 +25,18 @@ class ClientRepository extends Repository
         $applicationRepo = app(ApplicationRepository::class);
         $timezoneRepo = app(TimezoneRepository::class);
 
-        $application  = $applicationRepo->query()
-            ->where('ref', $request->application_ref)
-            ->findOrFail();
+        $application  = $applicationRepo->query()->where('ref', $request->application_ref)
+            ->firstOrFail();
 
-        $timezone  = $timezoneRepo->query()
-            ->where('timezone', $request->timezone)
-            ->findOrFail(); //todo: create or first timezone
+        $timezone  = $timezoneRepo->query()->firstOrCreate([
+            'timezone' => $request->timezone
+        ]);
 
-        return $this->query()->create([
-            'application_id' => $application->id,
-            'timezone_id' => $timezone->id,
+        return $this->query()->updateOrCreate([
             'uid' => $request->uid,
+        ],[
+            'application_id' => $application->id,
+            'timezone_id' => $timezone?->id
         ]);
     }
 }

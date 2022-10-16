@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TimezoneController;
 use App\Http\Controllers\UserController;
@@ -33,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     })->name('dashboard');
 
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.list');
-    Route::get('/applications/clients', [ApplicationController::class, 'applicationClients'])->name('clients.list');
+    Route::get('/applications/clients', [ClientsController::class, 'index'])->name('clients.list');
     Route::get('/applications/create', [ApplicationController::class, 'create'])->name('application.create');
     Route::post('/applications/create', [ApplicationController::class, 'store'])->name('application.store');
     Route::get('/applications/{applicationId}/edit', [ApplicationController::class, 'edit'])->name('application.edit');

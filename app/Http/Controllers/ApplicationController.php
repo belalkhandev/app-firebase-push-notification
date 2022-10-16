@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ApplicationRepository;
+use App\Repositories\ClientRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -53,10 +54,5 @@ class ApplicationController extends Controller
         return Inertia::render('Application/Edit', [
             'application' => $application
         ]);
-    }
-
-    public function applicationClients()
-    {
-        return Inertia::render('Clients');
     }
 }

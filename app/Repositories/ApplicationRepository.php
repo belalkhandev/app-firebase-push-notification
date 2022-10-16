@@ -18,7 +18,7 @@ class ApplicationRepository extends Repository
 
     public function getByPaginate($limit = 15)
     {
-        return $this->query()->active()->latest()->paginate($limit);
+        return $this->query()->withCount('clients')->active()->latest()->paginate($limit);
     }
 
     public function storeByRquest($request)

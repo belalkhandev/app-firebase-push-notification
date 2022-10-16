@@ -50,22 +50,22 @@ function deleteAction(applicationId) {
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Name</th>
+                        <th>Ref</th>
                         <th>Icon</th>
-                        <th>Server Key</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Clients</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(application, key) in applications.data">
-                        <td>{{ applications.from+key }}</td>
+                    <tr v-for="application in applications.data">
+                        <td>{{ application.ref }}</td>
+                        <td><img :src="application.icon" class="w-12" alt=""></td>
                         <td>{{ application.name }}</td>
-                        <td>
-                            <img :src="application.icon" class="w-12" alt="">
-                        </td>
-                        <td>{{ application.firebase_server_key }}</td>
+                        <td>{{ application.description }}</td>
+                        <td>{{ application.clients_count }}</td>
                         <td>
                             <span v-if="application.is_active" class="btn btn-sm btn-success">Active</span>
                             <span v-else class="btn btn-sm btn-danger">Inactive</span>

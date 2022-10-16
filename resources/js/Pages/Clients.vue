@@ -1,15 +1,23 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
+
+const props = defineProps({
+    clients: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
 </script>
 
 <template>
-    <Head title="Applications" />
+    <Head title="Clients list" />
 
     <AuthenticatedLayout>
 
         <template #header>
-            <h5>Application</h5>
+            <h5>All Clients: {{ clients.total }}</h5>
         </template>
 
         <div class="box">
@@ -21,21 +29,17 @@ import { Head } from '@inertiajs/inertia-vue3';
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>UID</th>
-                        <th>Icon</th>
                         <th>Application</th>
-                        <th></th>
+                        <th>UID</th>
+                        <th>Timezone</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in 5">
-                        <td>{{ item }}</td>
-                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</td>
-                        <td>
-                            <img src="../assets/images/app-icon.png" class="w-12" alt="">
-                        </td>
-                        <td>Test</td>
-                        <td></td>
+                    <tr v-for="(client, key) in clients.data">
+                        <td>{{ clients.from + key }}</td>
+                        <td>{{ client.application.name }}</td>
+                        <td>{{ client.uid }}</td>
+                        <td>{{ client.timezone ? client.timezone.timezone : '-' }}</td>
                     </tr>
                     </tbody>
                 </table>

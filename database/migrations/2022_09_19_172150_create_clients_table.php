@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('application_id')->constrained('applications')->onDelete('cascade');
-            $table->foreignId('timezone_id')->constrained('timezones')->onDelete('cascade');
+            $table->foreignId('timezone_id')->nullable()->constrained('timezones')->onDelete('cascade');
             $table->string('uid')->unique();
             $table->timestamps();
         });
