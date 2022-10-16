@@ -17,7 +17,7 @@ import { Link } from '@inertiajs/inertia-vue3';
             <div class="box-header">
                 <h5 class="box-title">Application list</h5>
                 <div class="action">
-                    <Link :href="route('application.create')" class="btn btn-dark text-xs btn-sm p-3">Add Application</Link>
+                    <Link :href="route('application.create')" class="btn btn-sm btn-rounded btn-outline-primary"><i class="bx bx-plus"></i></Link>
                 </div>
             </div>
             <div class="box-body">

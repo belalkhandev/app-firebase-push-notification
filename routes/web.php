@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/applications', [ApplicationController::class, 'index'])->name('application.list');
     Route::get('/applications/clients', [ApplicationController::class, 'applicationClients'])->name('clients.list');
-    Route::get('/applications/add', [ApplicationController::class, 'create'])->name('application.create');
+    Route::get('/applications/create', [ApplicationController::class, 'create'])->name('application.create');
     Route::post('/applications/create', [ApplicationController::class, 'store'])->name('application.store');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.list');
@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/timezones/{timezoneId}', [TimezoneController::class, 'edit'])->name('timezone.edit');
     Route::put('/timezones/{timezoneId}', [TimezoneController::class, 'update'])->name('timezone.update');
     Route::delete('/timezones/{timezoneId}', [TimezoneController::class, 'destroy'])->name('timezone.delete');
+
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('change.password');
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('update.password');
 });

@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('ref', 32)->unique();
             $table->string('name', 50);
-            $table->tinyText('fcm_api_key')->nullable();
+            $table->text('description');
+            $table->tinyText('firebase_server_key')->nullable();
             $table->string('icon')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });

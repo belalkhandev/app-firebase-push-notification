@@ -21,4 +21,9 @@ class Application extends Model
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }
