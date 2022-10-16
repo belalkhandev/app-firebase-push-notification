@@ -12,7 +12,8 @@ class Application extends Model
     protected $fillable = [
         'ref',
         'name',
-        'fcm_api_key',
+        'description',
+        'firebase_server_key',
         'icon',
         'created_by'
     ];

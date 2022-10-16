@@ -49,7 +49,7 @@ const submit = () => {
                             <div class="row">
                                 <div class="col-lg-8 offset-lg-2">
                                     <div class="form-group">
-                                        <label for="">Title</label>
+                                        <label for="">Application Name</label>
                                         <input type="text" v-model="form.name" placeholder="Enter application name" class="form-control">
                                         <InputError class="mt-2" :message="form.errors.name" />
                                     </div>

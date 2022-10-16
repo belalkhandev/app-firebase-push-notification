@@ -17,9 +17,7 @@ class ApplicationController extends Controller
 
     public function index()
     {
-        $applications = $this->appRepo->getByPaginate();
-
-        dd($applications);
+        $applications = $this->appRepo->getByPaginate(10);
 
         return Inertia::render('Application/List', [
             'applications' => $applications
@@ -34,7 +32,7 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'name' => 'required',
             'firebase_server_key' => 'required'
         ]);
 
@@ -45,6 +43,16 @@ class ApplicationController extends Controller
         }
 
         return redirect()->back()->with('message', 'Application has been stored successfully');
+    }
+
+
+    public function edit($applicationId)
+    {
+        $application = $this->appRepo->findOrFail($applicationId);
+
+        return Inertia::render('Application/Edit', [
+            'application' => $application
+        ]);
     }
 
     public function applicationClients()

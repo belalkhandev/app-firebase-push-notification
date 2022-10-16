@@ -1,7 +1,33 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
+import Pagination from "@/Components/Pagination.vue";
 import { Link } from '@inertiajs/inertia-vue3';
+
+const props = defineProps({
+    applications: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
+function deleteAction(applicationId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#6d28d9',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('application.delete', applicationId))
+        }
+    })
+}
+
+
 </script>
 
 <template>
@@ -28,23 +54,41 @@ import { Link } from '@inertiajs/inertia-vue3';
                         <th>Name</th>
                         <th>Icon</th>
                         <th>Server Key</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in 5">
-                        <td>{{ item }}</td>
-                        <td>Test app name</td>
+                    <tr v-for="(application, key) in applications.data">
+                        <td>{{ applications.from+key }}</td>
+                        <td>{{ application.name }}</td>
                         <td>
-                            <img src="../../assets/images/app-icon.png" class="w-12" alt="">
+                            <img :src="application.icon" class="w-12" alt="">
                         </td>
-                        <td>Loremipsumdolorsitamet,consecteturadipisicingelit.Doloreesseeum,harum impedit iste iusto </td>
-                        <td></td>
+                        <td>{{ application.firebase_server_key }}</td>
+                        <td>
+                            <span v-if="application.is_active" class="btn btn-sm btn-success">Active</span>
+                            <span v-else class="btn btn-sm btn-danger">Inactive</span>
+                        </td>
+                        <td>
+                            <div class="action">
+                                <ul>
+                                    <li>
+                                        <Link :href="route('application.edit', application.id)" class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></Link>
+                                    </li>
+                                    <li>
+                                        <button @click="deleteAction(application.id)" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="box-footer"></div>
+            <div class="box-footer">
+                <Pagination :data="applications" />
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

@@ -81,13 +81,7 @@ function deleteTimezone(timezoneId) {
                                         <div class="action">
                                             <ul>
                                                 <li>
-                                                    <Link :href="
-                                                    route(
-                                                        'timezone.edit',
-                                                        timezone.id
-                                                    )
-                                                "
-                                                        class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></Link>
+                                                    <Link :href="route('timezone.edit', timezone.id)" class="btn btn-sm btn-rounded btn-outline-warning"><i class="bx bx-edit"></i></Link>
                                                 </li>
                                                 <li>
                                                     <button @click="deleteTimezone(timezone.id)" class="btn btn-sm btn-rounded btn-outline-danger"><i class="bx bx-trash"></i></button>

@@ -36,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/applications/clients', [ApplicationController::class, 'applicationClients'])->name('clients.list');
     Route::get('/applications/create', [ApplicationController::class, 'create'])->name('application.create');
     Route::post('/applications/create', [ApplicationController::class, 'store'])->name('application.store');
+    Route::get('/applications/{applicationId}/edit', [ApplicationController::class, 'edit'])->name('application.edit');
+    Route::post('/applications/{applicationId}/edit', [ApplicationController::class, 'update'])->name('application.update');
+    Route::delete('/applications/{applicationId}/delete', [ApplicationController::class, 'destroy'])->name('application.delete');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notification.list');
 
