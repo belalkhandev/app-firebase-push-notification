@@ -21,6 +21,8 @@ class UserController extends Controller
             'password_confirmation' => 'required',
         ]);
 
-        return Inertia::render('ChangePassword');
+        //todo: update password
+
+        return redirect()->back()->with('message', 'Password has been changed successfully');
     }
 }

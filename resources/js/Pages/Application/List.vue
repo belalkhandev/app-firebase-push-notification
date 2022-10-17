@@ -1,35 +1,3 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
-import Pagination from "@/Components/Pagination.vue";
-import { Link } from '@inertiajs/inertia-vue3';
-
-const props = defineProps({
-    applications: {
-        type: Object,
-        default: () => ({})
-    }
-})
-
-function deleteAction(applicationId) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#6d28d9',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.delete(route('application.delete', applicationId))
-        }
-    })
-}
-
-
-</script>
-
 <template>
     <Head title="Applications" />
 
@@ -92,3 +60,32 @@ function deleteAction(applicationId) {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link } from '@inertiajs/inertia-vue3';
+import Pagination from "@/Components/Pagination.vue";
+
+const props = defineProps({
+    applications: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
+function deleteAction(applicationId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#6d28d9',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.delete(route('application.delete', applicationId))
+        }
+    })
+}
+</script>

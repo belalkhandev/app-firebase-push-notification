@@ -1,31 +1,3 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head, useForm} from '@inertiajs/inertia-vue3';
-import { Link } from '@inertiajs/inertia-vue3';
-import InputError from "@/Components/InputError.vue";
-
-const form = useForm({
-    name: '',
-    description: '',
-    firebase_server_key: '',
-    app_icon: ''
-});
-
-const submit = () => {
-    form.post(route('application.store'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-            Toast.fire({
-                icon: 'success',
-                title: 'Application has been stored successfully'
-            });
-        }
-    });
-};
-
-</script>
-
 <template>
     <Head title="Create Application" ></Head>
 
@@ -80,3 +52,30 @@ const submit = () => {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import {Head, useForm, Link} from '@inertiajs/inertia-vue3';
+import InputError from "@/Components/InputError.vue";
+
+const form = useForm({
+    name: '',
+    description: '',
+    firebase_server_key: '',
+    app_icon: ''
+});
+
+const submit = () => {
+    form.post(route('application.store'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset();
+            Toast.fire({
+                icon: 'success',
+                title: 'Application has been stored successfully'
+            });
+        }
+    });
+};
+
+</script>
