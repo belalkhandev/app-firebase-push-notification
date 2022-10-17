@@ -20,16 +20,18 @@
                         <th>#</th>
                         <th>Application</th>
                         <th>Title</th>
-                        <th>Descriptions</th>
+                        <th>Message</th>
+                        <th>Created At</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="notification in notifications.data">
-                        <td>Data</td>
-                        <td>Data</td>
-                        <td>Data</td>
-                        <td>Data</td>
+                    <tr v-for="(notification, key) in notifications.data">
+                        <td>{{ notifications.from+key }}</td>
+                        <td>{{ notification.application.name }}</td>
+                        <td>{{ notification.title }}</td>
+                        <td>{{ notification.description }}</td>
+                        <td>{{ notification.created_at }}</td>
                         <td>
                             <div class="action">
                                 <ul>
@@ -56,7 +58,7 @@
 
 <script setup>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-    import { Head, Link } from '@inertiajs/inertia-vue3';
+    import { Head, Link , useForm} from '@inertiajs/inertia-vue3';
 
     import Pagination from "@/Components/Pagination.vue";
 
@@ -66,6 +68,8 @@
             default: () => ({})
         }
     });
+
+    const form = useForm();
 
     function deleteAction(notificationId) {
         Swal.fire({

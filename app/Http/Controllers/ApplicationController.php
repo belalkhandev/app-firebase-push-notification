@@ -55,4 +55,13 @@ class ApplicationController extends Controller
             'application' => $application
         ]);
     }
+
+    public function destroy($applicationId)
+    {
+        if ($this->appRepo->deleteByRequest($applicationId)) {
+            return redirect()->back()->with('message', 'Application deleted successfully');
+        }
+
+        return redirect()->back()->with('message', 'Failed to delete application');
+    }
 }

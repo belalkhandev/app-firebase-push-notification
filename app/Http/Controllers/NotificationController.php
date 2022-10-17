@@ -98,4 +98,13 @@ class NotificationController extends Controller
 
         return redirect()->back()->with('message', 'Notification has been updated successfully');
     }
+
+    public function destroy($notificationId)
+    {
+        if ($this->notificationRepo->deleteByRequest($notificationId)) {
+            return redirect()->back()->with('message', 'Notification deleted successfully');
+        }
+
+        return redirect()->back()->with('message', 'Failed to delete notification');
+    }
 }

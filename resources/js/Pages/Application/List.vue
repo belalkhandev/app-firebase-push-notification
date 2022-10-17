@@ -63,7 +63,7 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import {Head, Link, useForm} from '@inertiajs/inertia-vue3';
 import Pagination from "@/Components/Pagination.vue";
 
 const props = defineProps({
@@ -71,7 +71,9 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     }
-})
+});
+
+const form = useForm();
 
 function deleteAction(applicationId) {
     Swal.fire({

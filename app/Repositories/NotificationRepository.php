@@ -20,7 +20,7 @@ class NotificationRepository extends Repository
 
     public function getByPaginate($limit = 15)
     {
-        return $this->query()->active()->latest()->paginate($limit);
+        return $this->query()->with('application:id,name')->active()->latest()->paginate($limit);
     }
 
     public function storeByRquest($request)
