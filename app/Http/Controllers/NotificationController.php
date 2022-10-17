@@ -64,7 +64,7 @@ class NotificationController extends Controller
         }
 
         //send notification
-        if ($request->send_notification) {
+        if ($request->is_send) {
             //toDo sent notfication
 
             return redirect()->back()->with('message', 'Notification has been sent');
@@ -85,6 +85,17 @@ class NotificationController extends Controller
 
     public function update(Request $request, $notificationId)
     {
+        $this->validate($request, [
+            'application_id' => 'required',
+            'title' => 'required'
+        ]);
 
+        $notification = $this->notificationRepo->updateByRequest($request, $notificationId);
+
+        if (!$notification) {
+            return redirect()->back()->with('message', 'Failed to update notification');
+        }
+
+        return redirect()->back()->with('message', 'Notification has been updated successfully');
     }
 }
