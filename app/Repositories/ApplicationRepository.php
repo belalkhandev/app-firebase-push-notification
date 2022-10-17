@@ -45,14 +45,15 @@ class ApplicationRepository extends Repository
 
         $path = $application->icon;
 
-        if ($request->hasFile('icon')) {
-            $path = 'Something'; //TODO upload file
+        if ($request->hasFile('app_icon')) {
+            unlink($application->icon);
+            $path = Media::fileUpload($request, 'app_icon', 'icons');
         }
 
-        return $application->update([
-            'ref' => substr(md5(time()), 0, 24),
+        return $this->query()->findOrFail($applicationId)->update([
             'name' => $request->name,
-            'fcm_api_key' => $request->fcm_api_key,
+            'description' => $request->description,
+            'firebase_server_key' => $request->firebase_server_key,
             'icon' => $path
         ]);
     }

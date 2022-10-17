@@ -12,7 +12,16 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('update.password'));
+    form.post(route('update.password'),{
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset();
+            Toast.fire({
+                icon: 'success',
+                title: 'Password updated successfully'
+            });
+        }
+    });
 };
 </script>
 

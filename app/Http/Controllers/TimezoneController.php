@@ -32,7 +32,7 @@ class TimezoneController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'timezone' => 'required|unique:timezones,timezone|max:6'
+            'timezone' => 'required|unique:timezones,timezone'
         ]);
 
         //check exist or not
@@ -47,13 +47,27 @@ class TimezoneController extends Controller
 
     public function edit($timezoneId)
     {
-        $timezones = $this->timezoneRepo->getByPaginate(10);
         $timezone = $this->timezoneRepo->findOrFail($timezoneId);
 
         return Inertia::render('Timezone/Edit', [
-            'timezones' => $timezones,
             'timezone' => $timezone
         ]);
+    }
+
+
+    public function update(Request $request, $timezoneId)
+    {
+        $this->validate($request, [
+            'timezone' => 'required|unique:timezones,timezone,'.$timezoneId
+        ]);
+
+        $timezone = $this->timezoneRepo->updateByRequest($request, $timezoneId);
+
+        if (!$timezone) {
+            return redirect()->back()->with('message', 'Failed to update timezone');
+        }
+
+        return redirect()->back()->with('message', 'Timezone updated successfully');
     }
 
     public function destroy($timezoneId)

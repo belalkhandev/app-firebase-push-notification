@@ -77,9 +77,13 @@ class NotificationController extends Controller
     public function edit($notificationId)
     {
         $notification = $this->notificationRepo->findOrFail($notificationId);
+        $applications = $this->applicationRepo->query()->active()->get();
+        $timezones = $this->timezoneRepo->query()->get();
 
         return Inertia::render('Notification/Edit', [
-            'notification' => $notification
+            'notification' => $notification,
+            'applications' => $applications,
+            'timezones' => $timezones
         ]);
     }
 

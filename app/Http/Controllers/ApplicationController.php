@@ -56,6 +56,22 @@ class ApplicationController extends Controller
         ]);
     }
 
+    public function update(Request $request, $applicationId)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'firebase_server_key' => 'required'
+        ]);
+
+        $application = $this->appRepo->updateByRequest($request, $applicationId);
+
+        if (!$application) {
+            return redirect()->back()->with('message', 'Failed to update application');
+        }
+
+        return redirect()->back()->with('message', 'Application has been update successfully');
+    }
+
     public function destroy($applicationId)
     {
         if ($this->appRepo->deleteByRequest($applicationId)) {

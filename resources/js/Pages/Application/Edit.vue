@@ -26,7 +26,7 @@ const submit = () => {
             form.reset();
             Toast.fire({
                 icon: 'success',
-                title: 'Application has been stored successfully'
+                title: 'Application has been update successfully'
             });
         }
     });
@@ -80,7 +80,7 @@ const submit = () => {
                                         </div>
                                     </div>
                                     <div class="form-submit mt-4 text-right">
-                                        <button type="submit" class="btn btn-primary py-2 px-4">Save</button>
+                                        <button type="submit" class="btn btn-primary py-2 px-4">Update</button>
                                     </div>
                                 </div>
                             </div>

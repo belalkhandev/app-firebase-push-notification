@@ -24,14 +24,10 @@
                 <div class="sidebar-item-body">
                     <ul>
                         <li>
-                            <NavLink :href="route('notification.create')" :active="route().current('notification.create')">
-                                Create Notification
-                            </NavLink>
+                            <NavLink :href="route('notification.create')" :active="route().current('notification.create')">Create Notification</NavLink>
                         </li>
                         <li>
-                            <NavLink :href="route('notification.list')" :active="route().current('notification.list')">
-                                Notifications
-                            </NavLink>
+                            <NavLink :href="route('notification.list')" :active="route().current('notification.list')">Notification list</NavLink>
                         </li>
                     </ul>
                 </div>

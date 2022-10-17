@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::factory()->create([
-            'email' => 'test@example.com',
+            'email' => 'notifier@admin.com',
             'role_id' => 1
         ]);
     }

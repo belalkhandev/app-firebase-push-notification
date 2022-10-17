@@ -47,6 +47,7 @@ class NotificationRepository extends Repository
         $path = $notification->image;
 
         if ($request->hasFile('image')) {
+            unlink($notification->image);
             $path = Media::fileUpload($request, 'image', 'notifications');
         }
 
@@ -55,7 +56,6 @@ class NotificationRepository extends Repository
             'timezone_id' => $request->timezone_id,
             'title' => $request->title,
             'description' => $request->description,
-            'created_by' => auth('web')->user()->id,
             'image' => $path
         ]);
     }

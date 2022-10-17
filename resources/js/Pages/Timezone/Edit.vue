@@ -19,12 +19,12 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('timezone.update', props.timezone.id), {
+    form.put(route('timezone.update', props.timezone.id), {
         preserveScroll: true,
         onSuccess: () => {
             Toast.fire({
                 icon: 'success',
-                title: 'Stored successfully'
+                title: 'Updated successfully'
             });
         }
     });
