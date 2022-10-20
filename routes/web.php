@@ -6,9 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TimezoneController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +21,7 @@ use Inertia\Inertia;
 
 
 Route::middleware(['auth', 'verified'])->group(function() {
-    Route::get('/', function () {
-        return Inertia::render('Dashboard', [
-            'canLogin' => Route::has('login'),
-        ]);
-    });
-
+    Route::get('/', [DashboardController::class, 'index'])->name('fr.home');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ApplicationRepository;
 use App\Repositories\NotificationRepository;
+use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -24,7 +25,8 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'applications' => $applications,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'canLogin' => Route::has('login'),
         ]);
     }
 }
