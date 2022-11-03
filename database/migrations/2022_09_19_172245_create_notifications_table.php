@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id')->constrained('applications')->onDelete('cascade');
-            $table->foreignId('timezone_id')->nullable()->constrained('applications')->onDelete('cascade');
+            $table->foreignId('application_id')->constrained()->onDelete('cascade');
+            $table->foreignId('timezone_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('image')->nullable();

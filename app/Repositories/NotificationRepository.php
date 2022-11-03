@@ -6,10 +6,11 @@ use App\Models\Application;
 use App\Models\Client;
 use App\Models\Notification;
 use App\Services\Media;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class NotificationRepository extends Repository
 {
-
     /**
      * @inheritDoc
      */
@@ -65,42 +66,67 @@ class NotificationRepository extends Repository
         return $this->query()->findOrFail($applicationId)->delete();
     }
 
-    public function sendPushNotification(Notification $notification, $applicationId)
+    public function sendPushNotification(Notification $notification, $timezoneId)
     {
         $application = app(ApplicationRepository::class);
-        $uids = Client::select('uid')->where('application_id', $applicationId)->get();
+        $notificationRepo = app(NotificationReportRepository::class);
+        $uids = Client::select('uid')->where('application_id', $notification->application_id);
+        if ($timezoneId) {
+            $uids = $uids->where('timezone_id', $timezoneId);
+
+        }
+
+        $uids = $uids->get();
 
         if ($uids->isEmpty()) {
             throw new \Exception('No user find for the app');
         }
 
-        $serverApiKey = $application->query()->findOrFail($applicationId)->firebase_server_key;
-
-        $data = [
-            "registration_ids" => $uids->pluck('uid')->toArray(),
-            "notification" => [
-                "title" => $notification->title,
-                "body" => $notification->description,
-            ]
-        ];
-
-        $dataString = json_encode($data);
-
+        $serverApiKey = $application->query()->findOrFail($notification->application_id)->firebase_server_key;
         $headers = [
             'Authorization: key=' . $serverApiKey,
             'Content-Type: application/json',
         ];
 
-        $ch = curl_init();
+        $message = [
+            "title" => $notification->title,
+            "body" => $notification->description,
+        ];
 
-        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+        if ($notification->image) {
+            $message['picture'] = URL::to('/' . $notification->image);
+        }
 
-        $response = curl_exec($ch);
+        $uids = $uids->chunk(750);
+
+        foreach ($uids as $reg_uids) {
+            $data = [
+                "registration_ids" => $reg_uids->pluck('uid')->toArray(),
+                "notification" => $message
+            ];
+
+            $dataString = json_encode($data);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+            $response = curl_exec($ch);
+
+            $response = json_decode($response, true);
+
+            $notificationRepo->query()->create([
+                'notification_id' => $notification->id,
+                'timezone_id' => $notification->timezone_id,
+                'success_send' => $response['success'],
+                'app_users' => count($reg_uids),
+                'failed_send' => $response['failure'],
+                //'canonical_ids' => $response['canonical_ids']
+            ]);
+        }
 
         return true;
     }

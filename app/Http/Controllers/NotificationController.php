@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Repositories\ApplicationRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\TimezoneRepository;
@@ -65,9 +66,9 @@ class NotificationController extends Controller
 
         //send notification
         if ($request->is_send) {
-            //toDo sent notfication
+            $this->notificationRepo->sendPushNotification($notification, $request->timezone_id);
 
-            return redirect()->back()->with('message', 'Notification has been sent');
+            return redirect()->back()->with('message', 'Notification has been stored and sent');
         }
 
         return redirect()->back()->with('message', 'Notification has been stored successfully');

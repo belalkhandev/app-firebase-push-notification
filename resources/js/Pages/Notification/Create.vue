@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="form-group mt-4">
-                                        <label class="mb-2">Application Icon</label><br>
+                                        <label class="mb-2">Notification Photo</label><br>
                                         <input type="file" @input="form.image = $event.target.files[0]">
                                     </div>
 
