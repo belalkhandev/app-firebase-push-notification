@@ -91,13 +91,10 @@ class NotificationRepository extends Repository
         $message = [
             "title" => $notification->title,
             "body" => $notification->description,
+            "image" => $notification->image ? URL::to('/' . $notification->image) : null
         ];
 
-        if ($notification->image) {
-            $message['picture'] = URL::to('/' . $notification->image);
-        }
-
-        $uids = $uids->chunk(750);
+        $uids = $uids->chunk(999);
 
         foreach ($uids as $reg_uids) {
             $data = [
@@ -124,7 +121,6 @@ class NotificationRepository extends Repository
                 'success_send' => $response['success'],
                 'app_users' => count($reg_uids),
                 'failed_send' => $response['failure'],
-                //'canonical_ids' => $response['canonical_ids']
             ]);
         }
 

@@ -22,10 +22,9 @@ class NotificationReportRepository extends Repository
         return $this->query()->updateOrCreate([
             'notification_id' => $request->notification_id,
             'timezone_id' => $request->timezone_id,
-            'app_users' => $request->total_users,
-            'success_send' => $request->success,
-            'failed_send' => $request->failure,
-            'canonical_ids' => $request->canonical_ids,
+            'users' => $request->total_users,
+            'success' => $request->success,
+            'failure' => $request->failure,
         ]);
     }
 }
