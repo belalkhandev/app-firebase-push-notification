@@ -56,6 +56,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     //password change routes
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('change.password');
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('update.password');
+
+    Route::get('/notification-users', [NotificationController::class, 'getNotificationUsers'])->name('notification.users');
 });
 
 

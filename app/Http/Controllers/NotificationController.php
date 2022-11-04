@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notification;
 use App\Repositories\ApplicationRepository;
+use App\Repositories\ClientRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\TimezoneRepository;
 use Illuminate\Http\Request;
@@ -14,12 +15,19 @@ class NotificationController extends Controller
     private $notificationRepo;
     private $applicationRepo;
     private $timezoneRepo;
+    private $clientRepo;
 
-    public function __construct(NotificationRepository $notificationRepository, ApplicationRepository $applicationRepository, TimezoneRepository $timezoneRepository)
+    public function __construct(
+        NotificationRepository $notificationRepository,
+        ApplicationRepository $applicationRepository,
+        TimezoneRepository $timezoneRepository,
+        ClientRepository $clientRepository
+    )
     {
         $this->notificationRepo = $notificationRepository;
         $this->applicationRepo = $applicationRepository;
         $this->timezoneRepo = $timezoneRepository;
+        $this->clientRepo = $clientRepository;
     }
 
     public function index()
@@ -111,5 +119,23 @@ class NotificationController extends Controller
         }
 
         return redirect()->back()->with('message', 'Failed to delete notification');
+    }
+
+    public function getNotificationUsers(Request $request)
+    {
+        $users = 0;
+
+        if ($request->application_id && $request->application_id != '') {
+            $users = $this->clientRepo->query()->select('id')->where('application_id', $request->application_id);
+            if ($request->timezone_id && $request->timezone_id != '') {
+                $users = $users->where('timezone_id', $request->timezone_id);
+            }
+
+            $users = $users->count();
+        }
+
+        return response()->json([
+            'users' => $users
+        ]);
     }
 }

@@ -118,9 +118,9 @@ class NotificationRepository extends Repository
             $notificationRepo->query()->create([
                 'notification_id' => $notification->id,
                 'timezone_id' => $notification->timezone_id,
-                'success_send' => $response['success'],
-                'app_users' => count($reg_uids),
-                'failed_send' => $response['failure'],
+                'users' => count($reg_uids),
+                'success' => $response['success'],
+                'failure' => $response['failure']
             ]);
         }
 
