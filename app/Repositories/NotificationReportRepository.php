@@ -19,7 +19,7 @@ class NotificationReportRepository extends Repository
 
     public function storeByRquest($request)
     {
-        return $this->query()->updateOrCreate([
+        return $this->query()->create([
             'notification_id' => $request->notification_id,
             'timezone_id' => $request->timezone_id,
             'users' => $request->total_users,
