@@ -35,6 +35,7 @@ class NotificationRepository extends Repository
         return $this->query()->create([
             'application_id' => $request->application_id,
             'timezone_id' => $request->timezone_id,
+            'activity' => $request->activity,
             'title' => $request->title,
             'description' => $request->description,
             'created_by' => auth('web')->user()->id,
@@ -55,21 +56,22 @@ class NotificationRepository extends Repository
         return $notification->update([
             'application_id' => $request->application_id,
             'timezone_id' => $request->timezone_id,
+            'activity' => $request->activity,
             'title' => $request->title,
             'description' => $request->description,
             'image' => $path
         ]);
     }
 
-    public function deleteByRequest($applicationId)
+    public function deleteByRequest($notificationId)
     {
-        return $this->query()->findOrFail($applicationId)->delete();
+        return $this->query()->findOrFail($notificationId)->delete();
     }
 
     public function sendPushNotification(Notification $notification, $timezoneId)
     {
         $application = app(ApplicationRepository::class);
-        $notificationRepo = app(NotificationReportRepository::class);
+        $notificationReportRepo = app(NotificationReportRepository::class);
         $uids = Client::select('uid')->where('application_id', $notification->application_id);
         if ($timezoneId) {
             $uids = $uids->where('timezone_id', $timezoneId);
@@ -96,10 +98,18 @@ class NotificationRepository extends Repository
 
         $uids = $uids->chunk(999);
 
+        $notificationReportData = [
+            'notification_id' => $notification->id,
+            'timezone_id' => $notification->timezone_id,
+            'users' => 0,
+            'success' => 0,
+            'failure' => 0
+        ];
+
         foreach ($uids as $reg_uids) {
             $data = [
                 "registration_ids" => $reg_uids->pluck('uid')->toArray(),
-                "notification" => $message
+                "data" => $message
             ];
 
             $dataString = json_encode($data);
@@ -115,14 +125,14 @@ class NotificationRepository extends Repository
 
             $response = json_decode($response, true);
 
-            $notificationRepo->query()->create([
-                'notification_id' => $notification->id,
-                'timezone_id' => $notification->timezone_id,
-                'users' => count($reg_uids),
-                'success' => $response['success'],
-                'failure' => $response['failure']
-            ]);
+            $notificationReportData['users'] += count($reg_uids);
+            $notificationReportData['success'] += $response['success'];
+            $notificationReportData['failure'] += $response['failure'];
         }
+
+
+        $notificationReportRepo->query()->create($notificationReportData);
+
 
         return true;
     }

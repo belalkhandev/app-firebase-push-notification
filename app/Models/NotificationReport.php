@@ -16,4 +16,9 @@ class NotificationReport extends Model
         'success',
         'failure'
     ];
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
 }

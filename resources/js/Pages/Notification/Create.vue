@@ -37,6 +37,13 @@
                                         </select>
                                         <InputError class="mt-2" :message="form.errors.timezone_id" />
                                     </div>
+
+                                    <div class="form-group">
+                                        <label>Activity</label>
+                                        <input type="number" min="0" v-model="form.activity" placeholder="Notification activity" class="form-control">
+                                        <InputError class="mt-2" :message="form.errors.activity" />
+                                    </div>
+
                                     <div class="form-group">
                                         <label>Title</label>
                                         <input type="text" v-model="form.title" placeholder="Notification title" class="form-control">
@@ -104,7 +111,8 @@
         title: '',
         description: '',
         image: '',
-        is_send: 0
+        is_send: 0,
+        activity: null
     });
 
     const userData = useForm({

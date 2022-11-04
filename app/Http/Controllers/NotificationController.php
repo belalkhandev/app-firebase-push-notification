@@ -41,7 +41,9 @@ class NotificationController extends Controller
 
     public function show($notificationId)
     {
-        $notification = $this->notificationRepo->findOrFail($notificationId);
+        $notification = $this->notificationRepo->query()
+            ->with('application', 'timezone', 'reports', 'reports.timezone')
+            ->findOrFail($notificationId);
 
         return Inertia::render('Notification/Show', [
             'notification' => $notification
@@ -137,5 +139,15 @@ class NotificationController extends Controller
         return response()->json([
             'users' => $users
         ]);
+    }
+
+    public  function sendNotification(Request $request, $notificationId)
+    {
+        $notification = $this->notificationRepo->findOrFail($notificationId);
+
+        $this->notificationRepo->sendPushNotification($notification, $notification->timezone_id);
+
+         return redirect()->back()->with('message', 'Congratulations! Notification has been sent');
+
     }
 }
