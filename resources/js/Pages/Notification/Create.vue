@@ -61,15 +61,8 @@
                                         <input type="file" @input="form.image = $event.target.files[0]">
                                     </div>
 
-                                    <div class="form-group  mt-4">
-                                        <label>
-                                            <input type="checkbox" v-model="form.is_send" class="form-check-input mt-0 mr-2">
-                                            <span class="text-gray-600 cursor-pointer" :class="form.is_send ? 'text-violet-700': ''">Send notification now</span>
-                                        </label>
-                                    </div>
-
-                                    <div class="form-submit mt-4 text-right">
-                                        <button type="submit" class="btn btn-primary py-2 px-4 mr-4">Save Notification</button>
+                                    <div class="form-submit mt-8 text-right">
+                                        <button type="submit" class="btn btn-primary py-2 px-4 mr-4 w-full">Send Notification</button>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +104,7 @@
         title: '',
         description: '',
         image: '',
-        is_send: 0,
+        is_send: 1,
         activity: null
     });
 
@@ -153,7 +146,6 @@
         }).then(res => {
                 userData.users = res.data.users ? res.data.users : 0;
         }).catch(error => {
-            console.log(error)
             userData.users = 0
         })
     }

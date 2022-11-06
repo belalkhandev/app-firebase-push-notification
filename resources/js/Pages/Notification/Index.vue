@@ -19,6 +19,7 @@
                     <tr>
                         <th>#</th>
                         <th>Application</th>
+                        <th>Timezone</th>
                         <th>Title</th>
                         <th>Message</th>
                         <th>Activity</th>
@@ -30,6 +31,7 @@
                     <tr v-for="(notification, key) in notifications.data">
                         <td>{{ notifications.from+key }}</td>
                         <td>{{ notification.application.name }}</td>
+                        <td>{{ notification.timezone.timezone }}</td>
                         <td>{{ notification.title }}</td>
                         <td>{{ (notification.description).slice(0, 25)+'....' }}</td>
                         <td>{{ notification.activity ?? 'No' }}</td>

@@ -39,6 +39,10 @@
                                     <td>{{ notification.timezone.timezone }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Users</th>
+                                    <td>{{ notification.users }}</td>
+                                </tr>
+                                <tr>
                                     <th></th>
                                     <td>
                                         <img v-if="notification.image" :src="'/'+notification.image" alt="" class="img-thumbnail w-60">

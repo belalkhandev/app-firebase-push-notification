@@ -41,9 +41,13 @@ class NotificationController extends Controller
 
     public function show($notificationId)
     {
+        $clientRepo = app(ClientRepository::class);
         $notification = $this->notificationRepo->query()
             ->with('application', 'timezone', 'reports', 'reports.timezone')
             ->findOrFail($notificationId);
+
+        $users = $clientRepo->query()->where('application_id', $notification->application_id)->where('timezone_id', $notification->timezone_id)->count();
+        $notification->setAttribute('users', $users);
 
         return Inertia::render('Notification/Show', [
             'notification' => $notification
