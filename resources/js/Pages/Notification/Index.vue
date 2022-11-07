@@ -110,7 +110,15 @@ function sendNotification(notificationId) {
         confirmButtonText: 'Yes! Send Now!',
     }).then((result) => {
         if (result.isConfirmed) {
-            form.post(route('notification.send', notificationId))
+            form.post(route('notification.send', notificationId), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Notification has been successfully'
+                    });
+                }
+            })
         }
     })
 }
