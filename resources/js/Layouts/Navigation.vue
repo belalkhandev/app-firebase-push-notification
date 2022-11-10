@@ -24,15 +24,15 @@
                 <div class="sidebar-item-body">
                     <ul>
                         <li>
-                            <NavLink :href="route('notification.create')" :active="route().current('notification.create')">Create Notification</NavLink>
+                            <NavLink :href="route('notification.create')" :active="route().current('notification.create')">New Notification</NavLink>
                         </li>
                         <li>
-                            <NavLink :href="route('notification.list')" :active="route().current('notification.list')">Notification list</NavLink>
+                            <NavLink :href="route('notification.list')" :active="route().current('notification.list')">Notifications list</NavLink>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="sidebar-item">
+<!--            <div class="sidebar-item">
                 <div class="sidebar-item-header">
                         <span class="icon">
                             <i class='bx bxs-user-account' ></i>
@@ -44,7 +44,7 @@
                         <li><NavLink :href="route('clients.list')">All Clients</NavLink></li>
                     </ul>
                 </div>
-            </div>
+            </div>-->
             <div class="sidebar-item">
                 <div class="sidebar-item-header">
                         <span class="icon">

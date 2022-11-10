@@ -38,6 +38,11 @@
                                         <InputError class="mt-2" :message="form.errors.timezone_id" />
                                     </div>
                                     <div class="form-group">
+                                        <label>Activity</label>
+                                        <input type="number" min="0" v-model="form.activity" placeholder="Notification activity" class="form-control">
+                                        <InputError class="mt-2" :message="form.errors.activity" />
+                                    </div>
+                                    <div class="form-group">
                                         <label>Notification Title Name</label>
                                         <input type="text" v-model="form.title" placeholder="Enter application title" class="form-control">
                                         <InputError class="mt-2" :message="form.errors.title" />
@@ -81,6 +86,7 @@ import InputError from "@/Components/InputError.vue";
 const form = useForm({
     application_id: props.notification.application_id,
     timezone_id: props.notification.timezone_id,
+    activity: props.notification.activity,
     title: props.notification.title,
     description: props.notification.description,
     image: '',

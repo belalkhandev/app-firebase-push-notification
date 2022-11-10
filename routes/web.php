@@ -41,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/notifications/{notificationId}/edit', [NotificationController::class, 'edit'])->name('notification.edit');
     Route::post('/notifications/{notificationId}/edit', [NotificationController::class, 'update'])->name('notification.update');
     Route::delete('/notifications/{notificationId}', [NotificationController::class, 'destroy'])->name('notification.delete');
+    Route::post('/notifications/{notificationId}/send', [NotificationController::class, 'sendNotification'])->name('notification.send');
 
     //client routes
     Route::get('/clients', [ApplicationController::class, 'index'])->name('client.list');
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     //password change routes
     Route::get('/change-password', [UserController::class, 'changePassword'])->name('change.password');
     Route::post('/change-password', [UserController::class, 'updatePassword'])->name('update.password');
+
+    Route::get('/notification-users', [NotificationController::class, 'getNotificationUsers'])->name('notification.users');
 });
 
 

@@ -36,7 +36,15 @@ function deleteTimezone(timezoneId) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            form.delete(route('timezone.delete', timezoneId))
+            form.delete(route('timezone.delete', timezoneId), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Deleted successfully'
+                    });
+                }
+            })
         }
     })
 }

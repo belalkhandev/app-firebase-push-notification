@@ -17,10 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('notification_id')->constrained()->onDelete('cascade');
             $table->foreignId('timezone_id')->constrained()->onDelete('cascade');
-            $table->integer('app_users')->nullable();
-            $table->integer('success_send')->nullable();
-            $table->integer('failed_send')->nullable();
-            $table->integer('canonical_ids')->nullable();
+            $table->integer('users')->nullable();
+            $table->integer('success')->nullable();
+            $table->integer('failure')->nullable();
             $table->timestamps();
         });
     }

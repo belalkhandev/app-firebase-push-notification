@@ -86,7 +86,15 @@ function deleteAction(applicationId) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            form.delete(route('application.delete', applicationId))
+            form.delete(route('application.delete', applicationId), {
+                preserveScroll: true,
+                    onSuccess: () => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Deleted successfully'
+                    });
+                }
+            })
         }
     })
 }

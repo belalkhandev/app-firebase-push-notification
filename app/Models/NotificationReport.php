@@ -12,8 +12,13 @@ class NotificationReport extends Model
     protected $fillable = [
         'notification_id',
         'timezone_id',
-        'app_users',
-        'success_send',
-        'failed_send'
+        'users',
+        'success',
+        'failure'
     ];
+
+    public function timezone()
+    {
+        return $this->belongsTo(Timezone::class);
+    }
 }

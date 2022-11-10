@@ -12,6 +12,7 @@ class Notification extends Model
     protected $fillable = [
         'application_id',
         'timezone_id',
+        'activity',
         'title',
         'description',
         'image',
@@ -26,6 +27,11 @@ class Notification extends Model
     public function timezone()
     {
         return $this->belongsTo(Timezone::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(NotificationReport::class, 'notification_id', 'id')->latest();
     }
 
     public function scopeActive($query)

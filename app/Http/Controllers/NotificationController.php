@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notification;
 use App\Repositories\ApplicationRepository;
+use App\Repositories\ClientRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\TimezoneRepository;
 use Illuminate\Http\Request;
@@ -14,12 +15,19 @@ class NotificationController extends Controller
     private $notificationRepo;
     private $applicationRepo;
     private $timezoneRepo;
+    private $clientRepo;
 
-    public function __construct(NotificationRepository $notificationRepository, ApplicationRepository $applicationRepository, TimezoneRepository $timezoneRepository)
+    public function __construct(
+        NotificationRepository $notificationRepository,
+        ApplicationRepository $applicationRepository,
+        TimezoneRepository $timezoneRepository,
+        ClientRepository $clientRepository
+    )
     {
         $this->notificationRepo = $notificationRepository;
         $this->applicationRepo = $applicationRepository;
         $this->timezoneRepo = $timezoneRepository;
+        $this->clientRepo = $clientRepository;
     }
 
     public function index()
@@ -33,7 +41,13 @@ class NotificationController extends Controller
 
     public function show($notificationId)
     {
-        $notification = $this->notificationRepo->findOrFail($notificationId);
+        $clientRepo = app(ClientRepository::class);
+        $notification = $this->notificationRepo->query()
+            ->with('application', 'timezone', 'reports', 'reports.timezone')
+            ->findOrFail($notificationId);
+
+        $users = $clientRepo->query()->where('application_id', $notification->application_id)->where('timezone_id', $notification->timezone_id)->count();
+        $notification->setAttribute('users', $users);
 
         return Inertia::render('Notification/Show', [
             'notification' => $notification
@@ -111,5 +125,33 @@ class NotificationController extends Controller
         }
 
         return redirect()->back()->with('message', 'Failed to delete notification');
+    }
+
+    public function getNotificationUsers(Request $request)
+    {
+        $users = 0;
+
+        if ($request->application_id && $request->application_id != '') {
+            $users = $this->clientRepo->query()->select('id')->where('application_id', $request->application_id);
+            if ($request->timezone_id && $request->timezone_id != '') {
+                $users = $users->where('timezone_id', $request->timezone_id);
+            }
+
+            $users = $users->count();
+        }
+
+        return response()->json([
+            'users' => $users
+        ]);
+    }
+
+    public  function sendNotification(Request $request, $notificationId)
+    {
+        $notification = $this->notificationRepo->findOrFail($notificationId);
+
+        $this->notificationRepo->sendPushNotification($notification, $notification->timezone_id);
+
+         return redirect()->back()->with('message', 'Congratulations! Notification has been sent');
+
     }
 }
