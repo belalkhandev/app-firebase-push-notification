@@ -134,7 +134,6 @@
             preserveScroll: true,
             onSuccess: () => {
                 const report = props.flash.data
-                console.log(report)
                 form.reset();
                 Swal.fire({
                     title: 'Notification sent',
