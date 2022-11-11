@@ -73,9 +73,15 @@ import { Head, Link , useForm} from '@inertiajs/inertia-vue3';
 import moment from 'moment'
 
 import Pagination from "@/Components/Pagination.vue";
+import axios from "axios";
 
 const props = defineProps({
     notifications: {
+        type: Object,
+        default: () => ({})
+    },
+
+    flash: {
         type: Object,
         default: () => ({})
     }
@@ -113,10 +119,23 @@ function sendNotification(notificationId) {
             form.post(route('notification.send', notificationId), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Notification has been successfully'
-                    });
+                    axios.get(route('notification.report.show', notificationId), {
+                        params: {
+                            application_id: form.application_id,
+                            timezone_id: form.timezone_id
+                        }
+                    }).then(res => {
+                        const report = res.data.report
+                        Swal.fire({
+                            title: 'Notification Report',
+                            icon: 'success',
+                            html:'<b class="text-primary">Total: '+report.users+'</b>, <b class="text-success">Success: '+report.success+'</b>, <b class="text-danger">Failure: '+report.failure+'</b>',
+                            showCloseButton: true,
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#6d28d9',
+                        })
+                    })
+
                 }
             })
         }

@@ -80,9 +80,9 @@ class NotificationController extends Controller
 
         //send notification
         if ($request->is_send) {
-            $this->notificationRepo->sendPushNotification($notification, $request->timezone_id);
+            $report = $this->notificationRepo->sendPushNotification($notification, $request->timezone_id);
 
-            return redirect()->back()->with('message', 'Notification has been stored and sent');
+            return redirect()->back()->with('message', 'Notification has been stored and sent')->with('data', $report);
         }
 
         return redirect()->back()->with('message', 'Notification has been stored successfully');
@@ -145,13 +145,23 @@ class NotificationController extends Controller
         ]);
     }
 
-    public  function sendNotification(Request $request, $notificationId)
+    public  function sendNotification($notificationId)
     {
         $notification = $this->notificationRepo->findOrFail($notificationId);
 
-        $this->notificationRepo->sendPushNotification($notification, $notification->timezone_id);
+        $notificationData = $this->notificationRepo->sendPushNotification($notification, $notification->timezone_id);
 
-         return redirect()->back()->with('message', 'Congratulations! Notification has been sent');
+        return redirect()->back()->with('message', $notificationData);
 
+    }
+
+    public function getNotificationReport($notificationId)
+    {
+        $report = $this->notificationRepo->getLatestNotificationReportByNotificationId($notificationId);
+
+        return response()->json([
+            'status' => true,
+            'report' => $report
+        ], 200);
     }
 }

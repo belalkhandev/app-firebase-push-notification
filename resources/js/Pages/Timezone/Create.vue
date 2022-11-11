@@ -12,6 +12,13 @@ const form = useForm({
     timezone: ''
 });
 
+const props = defineProps({
+    flash: {
+        type: Object,
+        default: () => ({})
+    },
+});
+
 const submit = () => {
     form.post(route('timezone.store'), {
         preserveScroll: true,
@@ -19,7 +26,13 @@ const submit = () => {
             form.reset();
             Toast.fire({
                 icon: 'success',
-                title: 'Stored successfully'
+                title: props.flash.message
+            });
+        },
+        onError: () => {
+            Toast.fire({
+                icon: 'error',
+                title: "Something went wrong"
             });
         }
     });

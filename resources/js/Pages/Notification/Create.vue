@@ -121,18 +121,29 @@
         timezones: {
             type: Object,
             default: () => ({})
-        }
+        },
+
+        flash: {
+            type: Object,
+            default: () => ({})
+        },
     });
 
     const submit = () => {
         form.post(route('notification.store'), {
             preserveScroll: true,
             onSuccess: () => {
+                const report = props.flash.data
+                console.log(report)
                 form.reset();
-                Toast.fire({
+                Swal.fire({
+                    title: 'Notification sent',
                     icon: 'success',
-                    title: 'Notification stored successfully'
-                });
+                    html:'<b class="text-primary">Total: '+report.users+'</b>, <b class="text-success">Success: '+report.success+'</b>, <b class="text-danger">Failure: '+report.failure+'</b>',
+                    showCloseButton: true,
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#6d28d9',
+                })
             }
         });
     };

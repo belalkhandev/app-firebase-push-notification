@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::post('/notifications/{notificationId}/edit', [NotificationController::class, 'update'])->name('notification.update');
     Route::delete('/notifications/{notificationId}', [NotificationController::class, 'destroy'])->name('notification.delete');
     Route::post('/notifications/{notificationId}/send', [NotificationController::class, 'sendNotification'])->name('notification.send');
+    Route::get('/notifications/{notificationId}/report', [NotificationController::class, 'getNotificationReport'])->name('notification.report.show');
 
     //client routes
     Route::get('/clients', [ApplicationController::class, 'index'])->name('client.list');

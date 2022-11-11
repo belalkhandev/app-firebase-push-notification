@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\URL;
 class NotificationRepository extends Repository
 {
     /**
+    * @var NotificationReportRepository $notificationReportRepository
+    */
+    private $notificationReportRepo;
+
+    /**
      * @inheritDoc
      */
     public function model()
@@ -75,7 +80,8 @@ class NotificationRepository extends Repository
     public function sendPushNotification(Notification $notification, $timezoneId)
     {
         $application = app(ApplicationRepository::class);
-        $notificationReportRepo = app(NotificationReportRepository::class);
+        $this->notificationReportRepo = app(NotificationReportRepository::class);
+
         $uids = Client::select('uid')->where('application_id', $notification->application_id);
         if ($timezoneId) {
             $uids = $uids->where('timezone_id', $timezoneId);
@@ -134,10 +140,16 @@ class NotificationRepository extends Repository
             $notificationReportData['failure'] += $response['failure'];
         }
 
+        return $this->notificationReportRepo->query()->create($notificationReportData);
 
-        $notificationReportRepo->query()->create($notificationReportData);
+    }
 
+    public function getLatestNotificationReportByNotificationId($notificationId)
+    {
+        $this->notificationReportRepo = app(NotificationReportRepository::class);
 
-        return true;
+        return $this->notificationReportRepo->query()
+            ->where('notification_id', $notificationId)->latest()
+            ->firstOrFail();
     }
 }
